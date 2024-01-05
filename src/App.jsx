@@ -5,9 +5,10 @@ import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
 
 export default function App() {
-  const [dice, setDice] = useState(allNewDice()); 
-  const[tenzis, setTenzis] =useState(false)
+  const [dice, setDice] = useState(allNewDice()); //  Creating state
+  const[tenzis, setTenzis] =useState(false) //  Adding state Tenzis
 
+  //  Use effect 
   useEffect(()=>{
     const AllHeld = dice.every(die => die.isHeld)
     const firstValue = dice[0].value
@@ -19,7 +20,7 @@ export default function App() {
    
   },[dice])
    
-
+   
   function generateNewDie(){
     return {
       value: Math.ceil(Math.random() * 6),
@@ -28,6 +29,7 @@ export default function App() {
     }
   }
 
+    //  Generate 10 random numbers
 
   function allNewDice() {
     const newDice = [];
@@ -37,20 +39,21 @@ export default function App() {
     return newDice;
   }
  
-
+  //  Roll dice button 
   function rollDice(){
-    if (!tenzis){
-      setDice(oldDice => oldDice.map(die => {
+    if (!tenzis){  // Setting tenzis
+      setDice(oldDice => oldDice.map(die => { //  Updating rollDice to hold die
         return die.isHeld ? 
         die :
         generateNewDie()
       }))
-    } else {
-      setTenzis(false)
-      setDice(allNewDice)
+    } else { 
+      setTenzis(false) 
+      setDice(allNewDice) 
     }
   }
 
+  // Holding die
   function holdDice(id){
     setDice(oldDice => oldDice.map(die => {
       return die.id === id ? 
@@ -60,11 +63,14 @@ export default function App() {
   }
 
 
+   // Mapping to create boxes
   const diceElements = dice.map(die=> 
-  <Die value={die.value} key={die.id} isHeld={die.isHeld} holdDice={()=>holdDice(die.id)}/>)
+    //  Adding die value and key
+  <Die value={die.value} key={die.id} isHeld={die.isHeld} holdDice={()=>holdDice(die.id)}/>) // Adding hold
 
   return (
     <main>
+      
       {tenzis && <Confetti width={"600px"}/>}
       <h1 className="title">Tenzis</h1>
       <p className="instructions">Roll until all dice are the same. Click each die to freeze it at  its current value between rolls</p>
@@ -72,8 +78,9 @@ export default function App() {
       <button 
       className="roll-dice" 
       onClick={rollDice}
-      >
-        {tenzis ? "New Game" : "Roll"}
+      > 
+         
+        {tenzis ? "New Game" : "Roll"} 
         </button>
     </main>
   );
