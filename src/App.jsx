@@ -41,7 +41,7 @@ export default function App() {
  
   //  Roll dice button 
   function rollDice(){
-    if (!tenzis){  // Setting tenzis
+    if (!tenzis){       // Setting tenzis
       setDice(oldDice => oldDice.map(die => { //  Updating rollDice to hold die
         return die.isHeld ? 
         die :
